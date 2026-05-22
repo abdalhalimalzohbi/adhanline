@@ -6,7 +6,7 @@ all sizes are welcome — bug reports, fixes, themes, and docs.
 ## Development setup
 
 ```sh
-git clone https://github.com/azohbi/claude-prayer-status.git
+git clone https://github.com/abdalhalimalzohbi/claude-prayer-status.git
 cd claude-prayer-status
 npm install
 npm run build

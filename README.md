@@ -6,7 +6,7 @@
 
 Calm-to-urgent prayer strip · rotating dhikr · local prayer-time calculation — right inside your editor.
 
-[![CI](https://github.com/azohbi/claude-prayer-status/actions/workflows/ci.yml/badge.svg)](https://github.com/azohbi/claude-prayer-status/actions/workflows/ci.yml)
+[![CI](https://github.com/abdalhalimalzohbi/claude-prayer-status/actions/workflows/ci.yml/badge.svg)](https://github.com/abdalhalimalzohbi/claude-prayer-status/actions/workflows/ci.yml)
 [![npm version](https://img.shields.io/npm/v/claude-prayer-status.svg)](https://www.npmjs.com/package/claude-prayer-status)
 [![node](https://img.shields.io/badge/node-%E2%89%A518-brightgreen.svg)](https://nodejs.org)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
@@ -90,13 +90,13 @@ original) and walks you through confirming your location. Restart Claude Code �
 ### One-line script
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/azohbi/claude-prayer-status/main/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/abdalhalimalzohbi/claude-prayer-status/main/install.sh | sh
 ```
 
 ### Manual
 
 ```sh
-git clone https://github.com/azohbi/claude-prayer-status.git
+git clone https://github.com/abdalhalimalzohbi/claude-prayer-status.git
 cd claude-prayer-status
 npm install && npm run build
 npm link

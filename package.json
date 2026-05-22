@@ -12,14 +12,14 @@
     "cli"
   ],
   "license": "MIT",
-  "author": "azohbi",
-  "homepage": "https://github.com/azohbi/claude-prayer-status#readme",
+  "author": "abdalhalimalzohbi",
+  "homepage": "https://github.com/abdalhalimalzohbi/claude-prayer-status#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/azohbi/claude-prayer-status.git"
+    "url": "git+https://github.com/abdalhalimalzohbi/claude-prayer-status.git"
   },
   "bugs": {
-    "url": "https://github.com/azohbi/claude-prayer-status/issues"
+    "url": "https://github.com/abdalhalimalzohbi/claude-prayer-status/issues"
   },
   "type": "module",
   "engines": {
