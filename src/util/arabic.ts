@@ -123,3 +123,17 @@ export function reshapeArabic(input: string): string {
   }
   return out;
 }
+
+// Shapes Arabic and reorders it into visual RTL order — for terminals that
+// apply neither contextual shaping nor the bidi algorithm (the tasbih TUI).
+// Combining marks stay attached to their base letter through the reversal.
+export function reshapeArabicVisual(input: string): string {
+  if (!/[؀-ۿ]/.test(input)) return input;
+  const groups: string[] = [];
+  for (const ch of reshapeArabic(input)) {
+    const c = ch.codePointAt(0)!;
+    if (isMark(c) && groups.length) groups[groups.length - 1] += ch;
+    else groups.push(ch);
+  }
+  return groups.reverse().join("");
+}

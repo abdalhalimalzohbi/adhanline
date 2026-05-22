@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { reshapeArabic } from "../src/util/arabic.js";
+import { reshapeArabic, reshapeArabicVisual } from "../src/util/arabic.js";
 
 describe("reshapeArabic", () => {
   it("leaves non-Arabic text unchanged", () => {
@@ -28,5 +28,29 @@ describe("reshapeArabic", () => {
     const out = reshapeArabic("لا");
     expect([0xfefb, 0xfefc]).toContain(out.codePointAt(0));
     expect([...out]).toHaveLength(1);
+  });
+});
+
+describe("reshapeArabicVisual", () => {
+  it("leaves non-Arabic text unchanged", () => {
+    expect(reshapeArabicVisual("0 / 33")).toBe("0 / 33");
+  });
+
+  it("shapes and reverses into visual RTL order", () => {
+    // logical-order shaping reversed: the last logical letter renders first.
+    const logical = [...reshapeArabic("سبحان الله")];
+    expect([...reshapeArabicVisual("سبحان الله")]).toEqual(
+      [...logical].reverse(),
+    );
+  });
+
+  it("emits only connected presentation forms", () => {
+    const out = reshapeArabicVisual("الله أكبر");
+    expect(
+      [...out].every((ch) => {
+        const c = ch.codePointAt(0)!;
+        return c === 0x20 || (c >= 0xfe70 && c <= 0xfefc);
+      }),
+    ).toBe(true);
   });
 });

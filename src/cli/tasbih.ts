@@ -1,6 +1,7 @@
 // `tasbih` — interactive counter TUI. Space counts, auto-advances
 // 33 → 33 → 34, then shows the closing dua.
 import { stdin, stdout } from "node:process";
+import { reshapeArabicVisual } from "../util/arabic.js";
 
 interface Phase {
   dhikr: string;
@@ -29,13 +30,15 @@ export async function runTasbih(): Promise<void> {
   const draw = () => {
     stdout.write("\x1b[2J\x1b[H\n  ✦ Tasbih ✦\n\n");
     if (done) {
-      stdout.write(`  ${CLOSING}\n\n  Tasbih complete — may it be accepted.\n\n  q: quit\n`);
+      stdout.write(
+        `  ${reshapeArabicVisual(CLOSING)}\n\n  Tasbih complete — may it be accepted.\n\n  q: quit\n`,
+      );
       return;
     }
     const p = PHASES[phase]!;
     const bar = "█".repeat(count) + "░".repeat(p.target - count);
     stdout.write(
-      `  ${p.dhikr}    (${phase + 1}/${PHASES.length})\n\n` +
+      `  ${reshapeArabicVisual(p.dhikr)}    (${phase + 1}/${PHASES.length})\n\n` +
         `  ${count} / ${p.target}\n  ${bar}\n\n` +
         `  space: count   r: reset phase   q: quit\n`,
     );
