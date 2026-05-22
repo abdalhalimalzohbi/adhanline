@@ -1,0 +1,55 @@
+{
+  "name": "claude-prayer-status",
+  "version": "0.1.0",
+  "description": "A live Islamic prayer status line for Claude Code — local prayer-time calculation, rotating dhikr, and a calm-to-urgent prayer strip.",
+  "keywords": [
+    "claude-code",
+    "statusline",
+    "prayer-times",
+    "islam",
+    "salah",
+    "adhan",
+    "cli"
+  ],
+  "license": "MIT",
+  "author": "azohbi",
+  "homepage": "https://github.com/azohbi/claude-prayer-status#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/azohbi/claude-prayer-status.git"
+  },
+  "bugs": {
+    "url": "https://github.com/azohbi/claude-prayer-status/issues"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "bin": {
+    "claude-prayer-status": "bin/claude-prayer-status.js"
+  },
+  "main": "dist/index.js",
+  "files": [
+    "dist/",
+    "bin/",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "adhan": "^4.4.3",
+    "luxon": "^3.5.0"
+  },
+  "devDependencies": {
+    "@types/luxon": "^3.4.2",
+    "@types/node": "^20.14.0",
+    "typescript": "^5.5.0",
+    "vitest": "^2.0.0"
+  }
+}
