@@ -1,6 +1,6 @@
 {
   "name": "adhanline",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A live Islamic prayer status line for Claude Code — local prayer-time calculation, rotating dhikr, and a calm-to-urgent prayer strip.",
   "keywords": [
     "claude-code",

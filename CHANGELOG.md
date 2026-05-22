@@ -5,6 +5,15 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.1] — 2026-05-22
+
+### Fixed
+
+- **Tasbih TUI:** Arabic dhikr now renders with connected letters in
+  right-to-left visual order. The full-screen counter writes directly to the
+  terminal, which applies neither contextual shaping nor bidi reordering, so
+  the text is now both shaped and reversed before display.
+
 ## [0.1.0] — 2026-05-22
 
 Initial release.
@@ -28,4 +37,5 @@ Initial release.
 - **Reliability:** universal error boundary (never crashes the terminal),
   tolerant stdin parsing, atomic file caching, sub-100 ms warm renders.
 
+[0.1.1]: https://github.com/abdalhalimalzohbi/adhanline/releases/tag/v0.1.1
 [0.1.0]: https://github.com/abdalhalimalzohbi/adhanline/releases/tag/v0.1.0
