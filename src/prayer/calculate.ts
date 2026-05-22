@@ -8,6 +8,7 @@ import type {
   ComputedPrayer,
   LocationData,
   PrayerDay,
+  PrayerOffsets,
 } from "../types.js";
 
 export class IncompleteLocationError extends Error {
@@ -41,11 +42,14 @@ function calcParams(method: CalculationMethod, roundSeconds: boolean) {
 }
 
 // Computes the five prayers for one calendar day in the location timezone.
+// `adjustments` shifts each prayer by a fixed number of minutes (the local
+// mosque tune); it moves both the displayed clock and the absolute instant.
 export function computePrayerDay(
   loc: LocationData,
   method: CalculationMethod,
   dateISO?: string,
   showSeconds = false,
+  adjustments?: Partial<PrayerOffsets>,
 ): PrayerDay {
   if (!isComputable(loc)) throw new IncompleteLocationError();
   const tz = loc.timezone;
@@ -61,14 +65,16 @@ export function computePrayerDay(
     calendarDate,
     calcParams(method, showSeconds),
   );
-  const fmt = showSeconds ? "HH:mm:ss" : "HH:mm";
+  // 12-hour wall-clock display, e.g. "5:42 PM".
+  const fmt = showSeconds ? "h:mm:ss a" : "h:mm a";
 
   const prayers: ComputedPrayer[] = PRAYER_ORDER.map((name) => {
     const instant: Date = times[name];
-    const dt = DateTime.fromJSDate(instant).setZone(tz);
+    const offset = adjustments?.[name] ?? 0;
+    const dt = DateTime.fromJSDate(instant).setZone(tz).plus({ minutes: offset });
     return {
       name,
-      iso: dt.toISO() ?? instant.toISOString(),
+      iso: dt.toISO() ?? new Date(instant.getTime() + offset * 60_000).toISOString(),
       clock: dt.toFormat(fmt),
     };
   });

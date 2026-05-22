@@ -33,12 +33,24 @@ describe("computePrayerDay", () => {
     const ms = d.prayers.map((p) => DateTime.fromISO(p.iso).toMillis());
     expect(ms).toEqual([...ms].sort((a, b) => a - b));
     expect(d.prayers[0]!.iso).toContain("+07:00");
-    expect(d.prayers[0]!.clock).toMatch(/^\d{2}:\d{2}$/);
+    expect(d.prayers[0]!.clock).toMatch(/^\d{1,2}:\d{2} (AM|PM)$/);
   });
 
-  it("showSeconds yields HH:mm:ss", () => {
+  it("showSeconds yields h:mm:ss a", () => {
     const d = computePrayerDay(JAKARTA, "MuslimWorldLeague", "2026-05-22", true);
-    expect(d.prayers[0]!.clock).toMatch(/^\d{2}:\d{2}:\d{2}$/);
+    expect(d.prayers[0]!.clock).toMatch(/^\d{1,2}:\d{2}:\d{2} (AM|PM)$/);
+  });
+
+  it("applies per-prayer minute offsets to clock and instant", () => {
+    const base = computePrayerDay(JAKARTA, "MuslimWorldLeague", "2026-05-22");
+    const tuned = computePrayerDay(JAKARTA, "MuslimWorldLeague", "2026-05-22", false, {
+      maghrib: 5,
+    });
+    const baseM = DateTime.fromISO(base.prayers[3]!.iso);
+    const tunedM = DateTime.fromISO(tuned.prayers[3]!.iso);
+    expect(tunedM.diff(baseM, "minutes").minutes).toBe(5);
+    // Untouched prayers are unchanged.
+    expect(tuned.prayers[0]!.iso).toBe(base.prayers[0]!.iso);
   });
 
   it("stays correct around a DST transition", () => {

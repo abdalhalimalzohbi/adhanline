@@ -6,7 +6,7 @@ import { runTasbih } from "./tasbih.js";
 import { runTest } from "./test.js";
 import { runTmux } from "./tmux.js";
 
-const VERSION = "0.1.1";
+const VERSION = "0.1.2";
 
 const HELP = `adhanline — a live Islamic prayer status line for Claude Code
 

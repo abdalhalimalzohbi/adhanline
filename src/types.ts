@@ -77,6 +77,10 @@ export interface DhikrConfig {
   suppressWhenImminent: boolean;
 }
 
+// Per-prayer minute offsets — nudge calculated times to match a local mosque.
+// Positive = later, negative = earlier. Set once; applied to every day.
+export type PrayerOffsets = Record<PrayerName, number>;
+
 export interface Config {
   version: number;
   location: LocationConfig;
@@ -84,6 +88,7 @@ export interface Config {
   display: DisplayConfig;
   urgency: { amberMinutes: number; nowGraceMinutes: number };
   dhikr: DhikrConfig;
+  adjustments: PrayerOffsets;
 }
 
 export interface ComputedPrayer {

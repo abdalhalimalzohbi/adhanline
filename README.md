@@ -59,7 +59,7 @@ terminal.
 
 ### 📿 Living line
 - Shows your location at rest
-- Surfaces a **rotating Arabic dhikr** roughly every 10 minutes
+- Surfaces a **rotating Arabic dhikr** roughly every 5 minutes
 - A `✓ just now` **grace message** just after each prayer, with optional passive tasbih
 
 ### 🛡️ Built to never get in your way
@@ -186,14 +186,29 @@ Config lives at `~/.config/adhanline/config.json` (XDG-aware;
 | `display.showHijri` | `true` | Hijri date prefix on line 1. |
 | `display.checkmark` | `true` | `✓` on passed prayers. |
 | `display.adaptiveWidth` | `true` | Collapse on narrow terminals. |
-| `display.showSeconds` | `false` | `HH:mm:ss` instead of `HH:mm`. |
+| `display.showSeconds` | `false` | Add seconds to the 12-hour clock. |
 | `display.passiveTasbih` | `false` | Walk post-prayer adhkar during the grace window. |
 | `urgency.amberMinutes` | `15` | Amber-tier threshold. |
 | `urgency.nowGraceMinutes` | `25` | Post-prayer grace-window length. |
 | `dhikr.enabled` | `true` | Rotating dhikr on line 2. |
-| `dhikr.intervalMinutes` | `10` | How often a dhikr window opens. |
+| `dhikr.intervalMinutes` | `5` | How often a dhikr window opens. |
 | `dhikr.windowSeconds` | `90` | How long the window stays open. |
 | `dhikr.rotation` | `sequential` | `sequential` · `random` |
+| `adjustments.<prayer>` | `0` | Per-prayer minute offset — see below. |
+
+### Matching your local mosque
+
+Calculated times are astronomically correct but rarely match a specific mosque
+to the minute. **Adjustments** nudge each prayer by a fixed number of minutes —
+set them once and they apply every day, no daily input needed.
+
+```sh
+adhanline config set adjustments.maghrib 5    # Maghrib 5 min later
+adhanline config set adjustments.fajr -2      # Fajr 2 min earlier
+```
+
+The interactive `adhanline config` also walks you through all five prayers.
+Each offset shifts both the displayed time and its countdown.
 
 ```sh
 adhanline config                          # interactive editor

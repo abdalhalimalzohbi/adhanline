@@ -41,6 +41,7 @@ export function buildState(config: Config, nowOverride?: DateTime): RenderState 
       method,
       now.plus({ days: offset }).toFormat("yyyy-MM-dd"),
       seconds,
+      config.adjustments,
     );
 
   const today = day(0);

@@ -5,7 +5,7 @@ import { readCache } from "../cache/store.js";
 import { confirmDetectedLocation, promptManualLocation } from "../location/confirm.js";
 import { detectAndCache } from "../location/detect.js";
 import { clearDrift } from "../location/travel.js";
-import { CALCULATION_METHODS } from "../types.js";
+import { CALCULATION_METHODS, PRAYER_ORDER } from "../types.js";
 import type { CacheMeta, ThemeName } from "../types.js";
 import { ask, choose, confirm } from "../util/prompt.js";
 import { loadConfig, saveConfig } from "./load.js";
@@ -102,6 +102,19 @@ async function configInteractive(): Promise<void> {
     CALCULATION_METHODS,
     methodIdx,
   );
+
+  stdout.write("\n— Time adjustments —\n");
+  stdout.write("  Nudge calculated times to match your local mosque.\n");
+  stdout.write("  Minutes: positive = later, negative = earlier. Set once, applied daily.\n");
+  const hasAdj = PRAYER_ORDER.some((n) => config.adjustments[n] !== 0);
+  if (await confirm("Adjust prayer times?", hasAdj)) {
+    for (const name of PRAYER_ORDER) {
+      const label = name[0]!.toUpperCase() + name.slice(1);
+      const raw = await ask(`  ${label} offset (min)`, String(config.adjustments[name]));
+      const minutes = Number(raw);
+      if (Number.isFinite(minutes)) config.adjustments[name] = minutes;
+    }
+  }
 
   stdout.write("\n— Display —\n");
   config.display.theme = await choose(

@@ -27,12 +27,12 @@ describe("renderStatus", () => {
 
   it("shows a countdown on the calm next prayer", () => {
     const [l1] = lines(at("2026-05-22", "12:00"));
-    expect(l1).toMatch(/Asr 15:11 \(\d/);
+    expect(l1).toMatch(/Asr 3:11 PM \(\d/);
   });
 
   it("escalates to an amber marker near the next prayer", () => {
     const [l1] = lines(at("2026-05-22", "17:40"));
-    expect(l1).toContain("Maghrib 17:43 !");
+    expect(l1).toContain("Maghrib 5:43 PM !");
   });
 
   it("shows the NOW badge at the prayer minute", () => {
@@ -42,8 +42,8 @@ describe("renderStatus", () => {
 
   it("rolls the strip over to tomorrow's Fajr after Isha", () => {
     const [l1] = lines(at("2026-05-22", "23:30"));
-    expect(l1).toMatch(/Fajr 04:\d\d \(/);
-    expect(l1).toContain("Isha 18:52 ✓");
+    expect(l1).toMatch(/Fajr 4:\d\d AM \(/);
+    expect(l1).toContain("Isha 6:52 PM ✓");
   });
 
   it("collapses on a narrow terminal", () => {
@@ -51,7 +51,7 @@ describe("renderStatus", () => {
     process.env.COLUMNS = "40";
     try {
       const [l1] = lines(at("2026-05-22", "12:00"));
-      expect(l1).toContain("Asr 15:11");
+      expect(l1).toContain("Asr 3:11 PM");
       expect(l1).not.toContain("Fajr");
     } finally {
       if (prev === undefined) delete process.env.COLUMNS;
@@ -69,6 +69,7 @@ describe("line 2 priority", () => {
 
   it("surfaces a dhikr inside a dhikr window", () => {
     const cfg = normalizeConfig({ location: JAKARTA });
+    // 13:10 = minute 790, divisible by the 5-minute dhikr interval.
     const [, l2] = renderStatus(cfg, at("2026-05-22", "13:10")).split("\n");
     expect(DHIKR_LIST.some((d) => l2!.includes(d))).toBe(true);
   });

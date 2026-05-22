@@ -35,11 +35,12 @@ export const DEFAULT_CONFIG: Config = {
   urgency: { amberMinutes: 15, nowGraceMinutes: 25 },
   dhikr: {
     enabled: true,
-    intervalMinutes: 10,
+    intervalMinutes: 5,
     windowSeconds: 90,
     rotation: "sequential",
     suppressWhenImminent: true,
   },
+  adjustments: { fajr: 0, dhuhr: 0, asr: 0, maghrib: 0, isha: 0 },
 };
 
 function oneOf<T>(value: unknown, allowed: readonly T[], fallback: T): T {
@@ -72,6 +73,7 @@ export function normalizeConfig(input: unknown): Config {
   const disp = get("display");
   const urg = get("urgency");
   const dhk = get("dhikr");
+  const adj = get("adjustments");
   const d = DEFAULT_CONFIG;
 
   return {
@@ -120,6 +122,13 @@ export function normalizeConfig(input: unknown): Config {
         d.dhikr.rotation,
       ),
       suppressWhenImminent: bool(dhk.suppressWhenImminent, d.dhikr.suppressWhenImminent),
+    },
+    adjustments: {
+      fajr: clamp(adj.fajr, -60, 60, d.adjustments.fajr),
+      dhuhr: clamp(adj.dhuhr, -60, 60, d.adjustments.dhuhr),
+      asr: clamp(adj.asr, -60, 60, d.adjustments.asr),
+      maghrib: clamp(adj.maghrib, -60, 60, d.adjustments.maghrib),
+      isha: clamp(adj.isha, -60, 60, d.adjustments.isha),
     },
   };
 }
